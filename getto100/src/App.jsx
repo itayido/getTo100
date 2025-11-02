@@ -1,35 +1,31 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
+import GameBoards from "./components/GameBoards";
+import Header from "./components/Header";
 
 function App() {
-  const [count, setCount] = useState(0)
-
+  const [players, setPlayers] = useState([]);
+  const [startButton, setStartButton] = useState(false);
+  function addGamer(userName) {
+    const newPlayer = {
+      userName: userName,
+      scores: [],
+      initialNumber: Math.floor(Math.random() * 100),
+    };
+    const updatedPlayers = [...players, newPlayer];
+    setPlayers(updatedPlayers);
+    localStorage.setItem("players", JSON.stringify(updatedPlayers));
+  }
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header
+        addGamer={addGamer}
+        startButton={startButton}
+        setStartButton={setStartButton}
+      />
+      <GameBoards players={players} startButton={startButton} />
     </>
-  )
+  );
 }
 
-export default App
+export default App;
