@@ -1,42 +1,139 @@
+/* App.css */
+
+/* --- כללי --- */
 #root {
-  max-width: 1280px;
+  max-width: 1400px; /* הרחבה קלה כדי להכיל יותר לוחות */
   margin: 0 auto;
-  padding: 2rem;
+  padding: 1rem;
   text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #E0E0E0; /* צבע טקסט בהיר */
+  background-color: #1a1a1a; /* רקע כהה */
+  min-height: 100vh;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+body {
+    background-color: #1a1a1a;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+h1 {
+    color: #4CAF50; /* ירוק בוהק לכותרת הראשית */
+    margin-bottom: 1.5rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* --- Header --- */
+.header-container {
+    padding: 1rem 0;
+    border-bottom: 2px solid #333;
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
 
-.card {
-  padding: 2em;
+/* --- כפתורים כלליים --- */
+button {
+    background-color: #4CAF50; /* ירוק בהיר */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, transform 0.1s;
 }
 
-.read-the-docs {
-  color: #888;
+button:hover {
+    background-color: #45a049;
+    transform: translateY(-1px);
+}
+
+button:disabled {
+    background-color: #555;
+    cursor: not-allowed;
+    opacity: 0.6;
+    transform: none;
+}
+
+/* --- פריסת לוחות המשחק (Game Dashboard) --- */
+.gameboards-container {
+    display: grid;
+    /* משתמש ב-grid כדי לפרוס את הלוחות באופן שווה */
+    /* auto-fit יוצר כמה עמודות שצריך כדי למלא את הרוחב, עם גודל מינימלי של 300px לכל לוח */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 10px;
+}
+
+/* --- לוח שחקן בודד (Game Component) --- */
+.player-board {
+    background-color: #2a2a2a;
+    border: 3px solid #444; /* מסגרת רגילה */
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    transition: all 0.3s ease-in-out;
+}
+
+/* הדגשת השחקן הפעיל */
+.player-board.active {
+    border-color: #00bcd4; /* מסגרת כחולה בוהקת */
+    background-color: #333;
+    box-shadow: 0 0 15px rgba(0, 188, 212, 0.8); /* הילה כחולה */
+    transform: scale(1.02); /* הגדלה קלה */
+}
+
+.player-info {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+}
+
+.current-number {
+    font-size: 3.5rem;
+    font-weight: bold;
+    color: #00bcd4;
+    margin: 10px 0;
+}
+
+.steps-count {
+    font-size: 1.1rem;
+    color: #bbb;
+}
+
+.score-history {
+    margin-top: 15px;
+    padding-top: 10px;
+    border-top: 1px dashed #555;
+    font-size: 0.9rem;
+}
+
+.score-history h2 {
+    font-size: 1.1rem;
+    color: #4CAF50;
+    margin-bottom: 5px;
+}
+
+/* כפתורי הפעולות בלוח */
+.action-buttons button {
+    background-color: #555;
+    margin: 5px;
+    padding: 8px 15px;
+    font-weight: bold;
+}
+
+.action-buttons button:hover:not(:disabled) {
+    background-color: #777;
+}
+
+/* כפתורי סיום (restart/exit) */
+.finished-buttons button {
+    background-color: #FF9800; /* כתום */
+    margin-top: 10px;
+}
+.finished-buttons button:hover:not(:disabled) {
+    background-color: #fb8c00;
 }
