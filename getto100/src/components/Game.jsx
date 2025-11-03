@@ -37,7 +37,7 @@ function Game({
   }
 
   return (
-    <>
+    <div style={{ border: "1px solid white" }}>
       <div>Steps: {steps}</div>
       <div>Number:{currentNumber}</div>
       <div>
@@ -92,7 +92,7 @@ function Game({
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 

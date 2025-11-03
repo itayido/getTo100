@@ -5,17 +5,35 @@ function GameBoards({ players, startButton, setPlayers }) {
   const [currentTurn, setCurrentTurn] = useState(0);
 
   function resetGame(index) {
+    const savedPlayers = JSON.parse(localStorage.getItem("players") || "[]");
+
     setPlayers((prev) => {
       const updatedPlayers = [...prev];
-      updatedPlayers[index] = {
-        userName: updatedPlayers.userName,
+      const playerToReset = updatedPlayers[index];
+
+      const saved = savedPlayers.find(
+        (p) => p.userName === playerToReset.userName
+      );
+      const scores = saved ? saved.scores : playerToReset.scores;
+
+      const updatedPlayer = {
+        ...playerToReset,
         initialNumber: Math.floor(Math.random() * 100),
-        resetCounter: updatedPlayers[index].resetCounter + 1,
-        scores: [...updatedPlayers[index].scores],
+        resetCounter: playerToReset.resetCounter + 1,
+        scores,
       };
-      localStorage.setItem("players", JSON.stringify(updatedPlayers));
+
+      updatedPlayers[index] = updatedPlayer;
+
+      const mergedPlayers = [
+        ...savedPlayers.filter((p) => p.userName !== playerToReset.userName),
+        updatedPlayer,
+      ];
+
+      localStorage.setItem("players", JSON.stringify(mergedPlayers));
       return updatedPlayers;
     });
+
     setCurrentTurn((prev) => (prev + 1) % players.length);
   }
 
@@ -36,8 +54,8 @@ function GameBoards({ players, startButton, setPlayers }) {
       {players.map((gamer, index) => {
         return (
           <div key={gamer.userName}>
-            Gamer: {gamer.userName}
             <br />
+            Gamer: {gamer.userName}
             <Game
               key={`${gamer.userName}-${gamer.resetCounter}`}
               id={index}
