@@ -10,6 +10,7 @@ function Game({
   id,
   exitGame,
   players,
+  userName,
 }) {
   const [currentNumber, setCurrentNumber] = useState(initialNumber);
   const [steps, setSteps] = useState(0);
@@ -22,7 +23,16 @@ function Game({
     if (newNumber === 10) {
       setIsFinished(true);
       alert("Wow! you got to 100");
+      const savedPlayers = JSON.parse(localStorage.getItem("players") || "[]");
+      const newSavedPlayers = savedPlayers.map((player) => {
+        if (player.userName === userName) {
+          return { ...player, scores: [...player.scores, steps + 1] };
+        }
+        return player;
+      });
+      localStorage.setItem("players", JSON.stringify(newSavedPlayers));
     }
+
     setCurrentTurn((prev) => (prev + 1) % players.length);
   }
 
@@ -57,6 +67,10 @@ function Game({
       >
         /2
       </button>
+      <h2>
+        Scores:
+        {players.find((player) => player.userName === userName).scores}
+      </h2>
 
       {isFinished && (
         <div>
@@ -74,8 +88,7 @@ function Game({
               exitGame(id);
             }}
           >
-            {" "}
-            exit{" "}
+            exit
           </button>
         </div>
       )}

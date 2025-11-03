@@ -8,9 +8,10 @@ function GameBoards({ players, startButton, setPlayers }) {
     setPlayers((prev) => {
       const updatedPlayers = [...prev];
       updatedPlayers[index] = {
-        ...updatedPlayers[index],
+        userName: updatedPlayers.userName,
         initialNumber: Math.floor(Math.random() * 100),
         resetCounter: updatedPlayers[index].resetCounter + 1,
+        scores: [...updatedPlayers[index].scores],
       };
       localStorage.setItem("players", JSON.stringify(updatedPlayers));
       return updatedPlayers;
@@ -40,6 +41,7 @@ function GameBoards({ players, startButton, setPlayers }) {
             <Game
               key={`${gamer.userName}-${gamer.resetCounter}`}
               id={index}
+              userName={gamer.userName}
               initialNumber={gamer.initialNumber}
               isActive={currentTurn === index}
               startButton={startButton}
@@ -50,7 +52,6 @@ function GameBoards({ players, startButton, setPlayers }) {
               players={players}
             />
             <br />
-            Scores: {gamer.scores}
           </div>
         );
       })}

@@ -6,6 +6,7 @@ import Header from "./components/Header";
 function App() {
   const [players, setPlayers] = useState([]);
   const [startButton, setStartButton] = useState(false);
+
   function addGamer(userName) {
     const newPlayer = {
       userName: userName,
@@ -15,7 +16,11 @@ function App() {
     };
     const updatedPlayers = [...players, newPlayer];
     setPlayers(updatedPlayers);
-    localStorage.setItem("players", JSON.stringify(updatedPlayers));
+    const savedPlayers = JSON.parse(localStorage.getItem("players") || "[]");
+    localStorage.setItem(
+      "players",
+      JSON.stringify([...savedPlayers, newPlayer])
+    );
   }
   return (
     <>
