@@ -11,6 +11,7 @@ function App() {
       userName: userName,
       scores: [],
       initialNumber: Math.floor(Math.random() * 100),
+      resetCounter: 0,
     };
     const updatedPlayers = [...players, newPlayer];
     setPlayers(updatedPlayers);
@@ -23,7 +24,11 @@ function App() {
         startButton={startButton}
         setStartButton={setStartButton}
       />
-      <GameBoards players={players} startButton={startButton} />
+      <GameBoards
+        players={players}
+        startButton={startButton}
+        setPlayers={setPlayers}
+      />
     </>
   );
 }

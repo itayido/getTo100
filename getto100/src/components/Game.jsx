@@ -1,7 +1,16 @@
 import { useState } from "react";
 import "../App.css";
 
-function Game({ initialNumber, isActive, handleMove, startButton }) {
+function Game({
+  initialNumber,
+  isActive,
+  setCurrentTurn,
+  startButton,
+  resetGame,
+  id,
+  exitGame,
+  players,
+}) {
   const [currentNumber, setCurrentNumber] = useState(initialNumber);
   const [steps, setSteps] = useState(0);
   const [isFinished, setIsFinished] = useState(false);
@@ -10,12 +19,13 @@ function Game({ initialNumber, isActive, handleMove, startButton }) {
     if (!isActive || isFinished || !startButton) return;
     setSteps(steps + 1);
     setCurrentNumber(newNumber);
-    if (newNumber === 100) {
+    if (newNumber === 10) {
       setIsFinished(true);
       alert("Wow! you got to 100");
     }
-    handleMove();
+    setCurrentTurn((prev) => (prev + 1) % players.length);
   }
+
   return (
     <>
       <div>Steps: {steps}</div>
@@ -47,6 +57,28 @@ function Game({ initialNumber, isActive, handleMove, startButton }) {
       >
         /2
       </button>
+
+      {isFinished && (
+        <div>
+          <button
+            disabled={!isActive}
+            onClick={() => {
+              resetGame(id);
+            }}
+          >
+            restart
+          </button>
+          <button
+            disabled={!isActive}
+            onClick={() => {
+              exitGame(id);
+            }}
+          >
+            {" "}
+            exit{" "}
+          </button>
+        </div>
+      )}
     </>
   );
 }
